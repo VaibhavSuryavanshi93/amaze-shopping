@@ -1,4 +1,3 @@
-// Add event listeners to nav links
 document.querySelectorAll(".nav-link").forEach((link) => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
@@ -16,30 +15,42 @@ document.querySelectorAll(".nav-link").forEach((link) => {
   });
 });
 
-// Add event listeners to poster buttons
 document
   .querySelector(".buttons button[data-category='EVERYTHING']")
-  .addEventListener("click", () => {
+  .addEventListener("click", (event) => {
+    const button = event.target;
     document.querySelectorAll(".product").forEach((product) => {
-      product.style.display = "block";
-    });
-  });
-
-document
-  .querySelector(".buttons button[data-category='accessories']")
-  .addEventListener("click", () => {
-    document.querySelectorAll(".product").forEach((product) => {
-      if (product.getAttribute("data-category") === "accessories") {
+      if (
+        product.getAttribute("data-category") === "men" ||
+        product.getAttribute("data-category") === "women" ||
+        product.getAttribute("data-category") === "accessories"
+      ) {
         product.style.display = "block";
-      } else {
+      } else if (product !== button) {
         product.style.display = "none";
       }
     });
   });
 
-// Add event listeners to products for redirection
+document
+  .querySelector(".buttons button[data-category='accessories']")
+  .addEventListener("click", (event) => {
+    const button = event.target;
+    document.querySelectorAll(".product").forEach((product) => {
+      if (product.getAttribute("data-category") === "accessories") {
+        product.style.display = "block";
+      } else if (product !== button) {
+        product.style.display = "none";
+      }
+    });
+  });
+
 document.querySelectorAll(".product").forEach((product) => {
-  product.addEventListener("click", () => {
-    window.location.href = product.getAttribute("href");
+  product.addEventListener("click", (event) => {
+    const href = product.getAttribute("data-href");
+    if (href) {
+      window.location.href = href;
+    }
   });
 });
+
